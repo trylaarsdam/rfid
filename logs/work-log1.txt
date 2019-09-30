@@ -1,0 +1,33 @@
+21:47:02.835 -> Scan a MIFARE Classic PICC to demonstrate read and write.
+21:47:02.904 -> Using key (for A and B): FF FF FF FF FF FF
+21:47:02.939 -> BEWARE: Data will be written to the PICC, in sector #1
+21:47:03.149 -> 1 IsNewCardPresent
+21:47:03.184 -> 2 IsNewCardPresent
+21:47:03.219 -> 3 ReadCardSerial
+21:47:03.219 -> exit_at_read_card
+21:47:03.252 -> 3 ReadCardSerial
+21:47:03.252 -> exit_at_read_card
+21:47:03.287 -> 3 ReadCardSerial
+21:47:03.322 -> exit_at_read_card
+21:47:03.322 -> 3 ReadCardSerial
+21:47:03.357 -> exit_at_read_card
+21:47:03.357 -> 1 IsNewCardPresent
+21:47:03.392 -> 1 IsNewCardPresent
+21:47:04.925 -> 1 IsNewCardPresent
+21:47:04.960 -> 0 ReadCardSerial
+21:47:04.995 -> Card UID: A5 9A A6 89
+21:47:05.030 -> PICC type: MIFARE 1KB
+21:47:05.030 -> Authenticating using key A...
+21:47:05.065 -> Current data in sector:
+21:47:05.099 ->    1      7   00 00 00 00  00 00 FF 07  80 69 FF FF  FF FF FF FF  [ 0 0 1 ] 
+21:47:05.169 ->           6   00 00 00 00  00 00 00 00  00 00 00 00  00 00 00 00  [ 0 0 0 ] 
+21:47:05.273 ->           5   00 00 00 00  00 00 00 00  00 00 00 00  00 00 00 00  [ 0 0 0 ] 
+21:47:05.342 ->           4   54 65 6E 67  20 42 6F 00  00 00 00 00  00 00 00 00  [ 0 0 0 ] 
+21:47:05.412 -> 
+21:47:05.412 -> Reading data from block 4 ...
+21:47:05.447 -> MIFARE_Read() failed: The CRC_A does not match.
+21:47:05.481 -> Data in block 4:
+21:47:05.516 ->  30 04 26 EE AE 08 EC 08 F1 08 F0 95 00 10 00 01
+21:47:05.586 -> 
+21:47:05.586 -> Authenticating again using key B...
+21:47:05.621 -> PCD_Authenticate() failed: Timeout in communication.
