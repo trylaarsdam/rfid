@@ -45,7 +45,7 @@ void setup() {
     while (!Serial);    // Do nothing if no serial port is opened (added for Arduinos based on ATMEGA32U4)
     SPI.begin();        // Init SPI bus
     mfrc522.PCD_Init(); // Init MFRC522 card1
-    pinMode(D8, OUTPUT);
+    pinMode(8, OUTPUT);
 
     // Prepare the key (used both as key A and as key B)
     // using FFFFFFFFFFFFh which is the default at chip delivery from the factory
@@ -176,13 +176,19 @@ void loop() {
     }
     Serial.print(F("Number of bytes that match = ")); Serial.println(count);
     if (count == 16) {
-        Serial.println(F("Success :-)"));
-        digitalWrite(D8, HIGH);
+        Serial.println(F("Authenticated. Access Granted."));
+        digitalWrite(8, HIGH);
         delay(1000);
-        digitalWrite(D8, LOW);
+        digitalWrite(8, LOW);
     } else {
-        Serial.println(F("Failure, no match :-("));
-        Serial.println(F("  perhaps the write didn't work properly..."));
+        Serial.println(F("Access Denied. UID does not match."));
+        digitalWrite(8,HIGH);
+        delay(250);
+        digitalWrite(8,LOW);
+        delay(250);
+        digitalWrite(8,HIGH);
+        delay(250);
+        digitalWrite(8,LOW);
     }
     Serial.println();
 
