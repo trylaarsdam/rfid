@@ -1,5 +1,15 @@
 /**
  * ----------------------------------------------------------------------------
+ * This is a MFRC522 library example; see https://github.com/miguelbalboa/rfid
+ * for further details and other examples.
+ *
+ * NOTE: The library file MFRC522.h has a lot of useful info. Please read it.
+ *
+ * Released into the public domain.
+ * ----------------------------------------------------------------------------
+ * This sample shows how to read and write data blocks on a MIFARE Classic PICC
+ * (= card/tag).
+ *
  * BEWARE: Data will be written to the PICC, in sector #1 (blocks #4 to #7).
  *
  *
@@ -35,6 +45,7 @@ void setup() {
     while (!Serial);    // Do nothing if no serial port is opened (added for Arduinos based on ATMEGA32U4)
     SPI.begin();        // Init SPI bus
     mfrc522.PCD_Init(); // Init MFRC522 card1
+    pinMode(D8, OUTPUT);
 
     // Prepare the key (used both as key A and as key B)
     // using FFFFFFFFFFFFh which is the default at chip delivery from the factory
@@ -166,6 +177,9 @@ void loop() {
     Serial.print(F("Number of bytes that match = ")); Serial.println(count);
     if (count == 16) {
         Serial.println(F("Success :-)"));
+        digitalWrite(D8, HIGH);
+        delay(1000);
+        digitalWrite(D8, LOW);
     } else {
         Serial.println(F("Failure, no match :-("));
         Serial.println(F("  perhaps the write didn't work properly..."));
