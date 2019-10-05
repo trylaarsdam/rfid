@@ -1,3 +1,6 @@
+#include <ACROBOTIC_SSD1306.h>
+
+
 /**
  * ----------------------------------------------------------------------------
  * This is a MFRC522 library example; see https://github.com/miguelbalboa/rfid
@@ -58,7 +61,8 @@ void setup() {
     Serial.print(F("Using key (for A and B):"));
     dump_byte_array(key.keyByte, MFRC522::MF_KEY_SIZE);
     Serial.println();
-
+    Wire.begin();  
+    oled.init();
     Serial.println(F("BEWARE: Data will be written to the PICC, in sector #1"));
 }
 
@@ -67,7 +71,8 @@ void setup() {
  */
 void loop() {
     // Reset the loop if no new card present on the sensor/reader. This saves the entire process when idle.
-    
+                          // Initialze SSD1306 OLED display
+
     if ( ! mfrc522.PICC_IsNewCardPresent())
         
         return;
@@ -178,11 +183,17 @@ void loop() {
     Serial.print(F("Number of bytes that match = ")); Serial.println(count);
     if (count == 16) {
         Serial.println(F("Authenticated. Access Granted."));
+        oled.setTextXY(3,0);              // Set cursor position, start of line 3
+        oled.putString(" ACCESS GRANTED");
         digitalWrite(8, HIGH);
         delay(1000);
         digitalWrite(8, LOW);
+        delay(500);
+        oled.clearDisplay();
     } else {
         Serial.println(F("Access Denied. UID does not match."));
+        oled.setTextXY(3,0);
+        oled.putString("  ACCESS DENIED");
         digitalWrite(6,HIGH);
         delay(250);
         digitalWrite(6,LOW);
@@ -190,6 +201,8 @@ void loop() {
         digitalWrite(6,HIGH);
         delay(250);
         digitalWrite(6,LOW);
+        delay(500);
+        oled.clearDisplay();
     }
     Serial.println();
 
