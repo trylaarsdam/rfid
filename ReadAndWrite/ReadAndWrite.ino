@@ -50,6 +50,9 @@ void setup() {
     mfrc522.PCD_Init(); // Init MFRC522 card1
     pinMode(8, OUTPUT); //green led
     pinMode(6, OUTPUT); //red led
+    pinMode(5, OUTPUT); //blue led
+    pinMode(4, INPUT);  //write test
+    pinMode(3, INPUT);  //erase test
 
     // Prepare the key (used both as key A and as key B)
     // using FFFFFFFFFFFFh which is the default at chip delivery from the factory
@@ -109,6 +112,13 @@ void loop() {
         0x09, 0x0a, 0xff, 0x0b, //  9, 10, 255, 11,
         0x0c, 0x0d, 0x0e, 0x0f  // 12, 13, 14, 15
     };
+    byte dataUnauthBlock[]    = {
+        0xff, 0xff, 0xff, 0xff, //  1,  2,   3,  4,
+        0xff, 0xff, 0xff, 0xff, //  5,  6,   7,  8,
+        0xff, 0xff, 0xff, 0xff, //  9, 10, 255, 11,
+        0xff, 0xff, 0xff, 0xff  // 12, 13, 14, 15
+    };
+    
     byte trailerBlock   = 7;
     MFRC522::StatusCode status;
     byte buffer[18];
@@ -148,8 +158,8 @@ void loop() {
         Serial.println(mfrc522.GetStatusCodeName(status));
         return;
     }
-  /*
     // Write data to the block
+    if(digitalRead(4) == HIGH){
     Serial.print(F("Writing data into block ")); Serial.print(blockAddr);
     Serial.println(F(" ..."));
     dump_byte_array(dataBlock, 16); Serial.println();
@@ -158,8 +168,38 @@ void loop() {
         Serial.print(F("MIFARE_Write() failed: "));
         Serial.println(mfrc522.GetStatusCodeName(status));
     }
-    Serial.println();*/
-
+    oled.setTextXY(3,0);
+    oled.putString("  CARD WRITTEN");
+    digitalWrite(5,HIGH);
+    delay(2000);
+    digitalWrite(5,LOW);
+    oled.clearDisplay();
+    
+    Serial.println();
+    }
+    //erase access
+    if(digitalRead(3) == HIGH){
+    Serial.print(F("Writing data into block ")); Serial.print(blockAddr);
+    Serial.println(F(" ..."));
+    dump_byte_array(dataUnauthBlock, 16); Serial.println();
+    status = (MFRC522::StatusCode) mfrc522.MIFARE_Write(blockAddr, dataUnauthBlock, 16);
+    if (status != MFRC522::STATUS_OK) {
+        Serial.print(F("MIFARE_Write() failed: "));
+        Serial.println(mfrc522.GetStatusCodeName(status));
+    }
+    oled.setTextXY(3,0);
+    oled.putString("CARD UNAUTHORIZED");
+    digitalWrite(5,HIGH);
+    delay(500);
+    digitalWrite(5,LOW);
+    delay(500);
+    digitalWrite(5,HIGH);
+    delay(500);
+    digitalWrite(5,LOW);
+    oled.clearDisplay();
+    
+    Serial.println();
+    }
     // Read data from the block (again, should now be what we have written)
     Serial.print(F("Reading data from block ")); Serial.print(blockAddr);
     Serial.println(F(" ..."));
