@@ -99,7 +99,7 @@ void loop() {
     byte sector         = 1;
     byte blockAddr      = 4;
     byte dataBlock[]    = {
-        0x01, 0x02, 0x03, 0x04, //  1,  2,   3,  4,
+        0xff, 0xff, 0xff, 0xff, //  1,  2,   3,  4,
         0x05, 0x06, 0x07, 0x08, //  5,  6,   7,  8,
         0x09, 0x0a, 0xff, 0x0b, //  9, 10, 255, 11,
         0x0c, 0x0d, 0x0e, 0x0f  // 12, 13, 14, 15
@@ -143,7 +143,7 @@ void loop() {
         Serial.println(mfrc522.GetStatusCodeName(status));
         return;
     }
-
+  /*
     // Write data to the block
     Serial.print(F("Writing data into block ")); Serial.print(blockAddr);
     Serial.println(F(" ..."));
@@ -153,7 +153,7 @@ void loop() {
         Serial.print(F("MIFARE_Write() failed: "));
         Serial.println(mfrc522.GetStatusCodeName(status));
     }
-    Serial.println();
+    Serial.println();*/
 
     // Read data from the block (again, should now be what we have written)
     Serial.print(F("Reading data from block ")); Serial.print(blockAddr);
