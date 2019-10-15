@@ -53,7 +53,8 @@ void setup() {
     pinMode(5, OUTPUT); //blue led
     pinMode(4, INPUT);  //write test
     pinMode(3, INPUT);  //erase test
-
+    pinMode(2, OUTPUT);
+    digitalWrite(2, HIGH);
     // Prepare the key (used both as key A and as key B)
     // using FFFFFFFFFFFFh which is the default at chip delivery from the factory
     for (byte i = 0; i < 6; i++) {
@@ -226,8 +227,10 @@ void loop() {
         oled.setTextXY(3,0);              // Set cursor position, start of line 3
         oled.putString(" ACCESS GRANTED");
         digitalWrite(8, HIGH);
+        digitalWrite(2, LOW);
         delay(1000);
         digitalWrite(8, LOW);
+        digitalWrite(2, HIGH);
         delay(500);
         oled.clearDisplay();
     } else {
