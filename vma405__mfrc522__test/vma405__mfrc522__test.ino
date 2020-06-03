@@ -1,8 +1,5 @@
 
 /*
-* edited by Velleman / Patrick De Coninck
-* Read a card using a mfrc522 reader on your SPI interface
-* Pin layout should be as follows (on Arduino Uno - Velleman VMA100):
 * MOSI: Pin 11 / ICSP-4
 * MISO: Pin 12 / ICSP-1
 * SCK: Pin 13 / ISCP-3
